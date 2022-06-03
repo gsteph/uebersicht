@@ -12,11 +12,13 @@
 #import "WKView.h"
 #import "WKPage.h"
 #import "WKWebViewInternal.h"
+#import "Log.h"
 
 @import WebKit;
 
 @implementation UBWindowsController {
     NSMutableDictionary* windows;
+    Log* logger;
 }
 
 - (id)init
@@ -25,6 +27,7 @@
     if (self) {
         windows = [[NSMutableDictionary alloc] initWithCapacity:42];
     }
+    logger = [Log alloc];
     return self;
 }
 
@@ -34,6 +37,7 @@
    interactionEnabled:(Boolean)interactionEnabled
          forceRefresh:(Boolean)forceRefresh
 {
+    [logger logMessage: @"UBWindowsController:updateWindows"];
     NSMutableArray* obsoleteScreens = [[windows allKeys] mutableCopy];
     UBWindowGroup* windowGroup;
     
@@ -46,9 +50,9 @@
             [windowGroup loadUrl: [self screenUrl:screenId baseUrl:baseUrl]];
         } else {
             windowGroup = windows[screenId];
-            if (forceRefresh) {
-                [windowGroup reload];
-            }
+            //if (forceRefresh) {
+            //    [windowGroup reload];
+            //}
         }
         
         [windowGroup setFrame:[self screenRect:screenId] display:YES];
@@ -79,6 +83,7 @@
 
 - (void)reloadAll
 {
+    [logger logMessage: @"UBWindowsController:reloadAll"];
     for (NSNumber* screenId in windows) {
         UBWindowGroup* window = windows[screenId];
         [window reload];
@@ -139,6 +144,7 @@
 
 - (void)workspaceChanged
 {
+    [logger logMessage: @"UBWindowsController:workspaceChanged"];
     for (NSNumber* screenId in windows) {
         [windows[screenId] workspaceChanged];
     }

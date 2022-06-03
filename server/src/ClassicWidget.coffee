@@ -1,6 +1,7 @@
 $ = require('jquery')
 window.jQuery = $
 
+
 Timer = require('./Timer')
 runCommand = require('./runCommand')
 runShellCommand = require('./runShellCommand')
@@ -123,6 +124,7 @@ module.exports = ClassicWidget = (widgetObject) ->
       redraw(e)
 
   renderOutput = (output) ->
+    $.post("http://127.0.0.1:41417/http://127.0.0.1:5000/log", window.getTS()+"000 coffee     : renderOutput")
     if implementation.update? and rendered
       implementation.update(output, contentEl)
     else

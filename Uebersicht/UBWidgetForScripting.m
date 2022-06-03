@@ -9,8 +9,10 @@
 #import "UBWidgetForScripting.h"
 #import "UBDispatcher.h"
 #import "UBAppDelegate.h"
+#import "Log.h"
 
 static UBDispatcher* dispatcher;
+static Log* logger;
 
 @implementation UBWidgetForScripting
 
@@ -18,6 +20,7 @@ static UBDispatcher* dispatcher;
     if(!dispatcher) {
          dispatcher = [[UBDispatcher alloc] init];
     }
+    logger = [Log alloc];
 }
 
 -(id)initWithId:(NSString*)widgetId andSettings:(NSDictionary*)settings
@@ -82,6 +85,7 @@ static UBDispatcher* dispatcher;
 
 - (void)refresh:(NSScriptCommand*)command
 {
+    [logger logMessage: @"UBWidgetForScripting:refresh"];
     [dispatcher
         dispatch: @"WIDGET_WANTS_REFRESH"
         withPayload: _id

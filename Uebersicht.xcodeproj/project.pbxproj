@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15FC4C2D41695FC2E20F8800 /* libPods-UebersichtTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 998C0CDB1FF16CB40F0A499B /* libPods-UebersichtTests.a */; };
 		C19341556FEC4C45CF8E02A2 /* libPods-Uebersicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DACDEFC0930A8B2446F4E49 /* libPods-Uebersicht.a */; };
+		D075F3FA281D22EF00BBF540 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = D075F3F9281D22EF00BBF540 /* Log.m */; };
 		DC314A201C0EE024000A56D2 /* UBWidgetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC314A1F1C0EE024000A56D2 /* UBWidgetsController.m */; };
 		DC404DF31D2844E100305CE2 /* UBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC404DF21D2844E100305CE2 /* UBWebViewController.m */; };
 		DC404DF51D294B3100305CE2 /* geolocation.js in Resources */ = {isa = PBXBuildFile; fileRef = DC404DF41D294B3100305CE2 /* geolocation.js */; };
@@ -73,6 +74,8 @@
 		544E9505C20FD9261265DE73 /* Pods-UebersichtTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UebersichtTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UebersichtTests/Pods-UebersichtTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DACDEFC0930A8B2446F4E49 /* libPods-Uebersicht.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Uebersicht.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		998C0CDB1FF16CB40F0A499B /* libPods-UebersichtTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UebersichtTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D075F3F8281D22D500BBF540 /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
+		D075F3F9281D22EF00BBF540 /* Log.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
 		DC314A1E1C0EE024000A56D2 /* UBWidgetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UBWidgetsController.h; sourceTree = "<group>"; };
 		DC314A1F1C0EE024000A56D2 /* UBWidgetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UBWidgetsController.m; sourceTree = "<group>"; };
 		DC404DE81D26B92000305CE2 /* WKInspector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKInspector.h; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				DC404DEB1D26BAA400305CE2 /* WKHeaders */,
 				DC43AD8617EC2D9500241CC2 /* Supporting Files */,
 				DC43AD9717EC2D9500241CC2 /* Images.xcassets */,
+				D075F3F8281D22D500BBF540 /* Log.h */,
+				D075F3F9281D22EF00BBF540 /* Log.m */,
 			);
 			path = Uebersicht;
 			sourceTree = "<group>";
@@ -407,7 +412,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UB;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1330;
 				ORGANIZATIONNAME = tracesOf;
 				TargetAttributes = {
 					DC43AD7B17EC2D9500241CC2 = {
@@ -579,7 +584,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "BUILD=\"${BUILT_PRODUCTS_DIR}\"\n\n# By default, use the configured code signing identity for the project/target\nIDENTITY=\"${CODE_SIGN_IDENTITY}\"\nif [ \"$IDENTITY\" == \"\" ]\nthen\n    # If a code signing identity is not specified, use ad hoc signing\n    IDENTITY=\"-\"\nfi\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$BUILD/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework/Versions/A/Resources/AutoUpdate.app\"\ncodesign --entitlements \"$CODE_SIGN_ENTITLEMENTS\" --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$BUILD/$CONTENTS_FOLDER_PATH/Resources/node-arm64\"\ncodesign --entitlements \"$CODE_SIGN_ENTITLEMENTS\" --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$BUILD/$CONTENTS_FOLDER_PATH/Resources/node-x64\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$BUILD/$CONTENTS_FOLDER_PATH/Resources/node_modules/fsevents/fsevents.node\"\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -592,6 +598,7 @@
 				DC9F7CE31C439CE50014E25B /* UBDispatcher.m in Sources */,
 				DCE7E3C11A376AD400A12516 /* UBLocation.m in Sources */,
 				DC43ADB517EC35A800241CC2 /* UBWindow.m in Sources */,
+				D075F3FA281D22EF00BBF540 /* Log.m in Sources */,
 				DCF9D9011E9D512600D27988 /* UBReloadCommand.m in Sources */,
 				DC314A201C0EE024000A56D2 /* UBWidgetsController.m in Sources */,
 				DC4913961BEF9A75003E76EF /* UBScreensController.m in Sources */,
@@ -667,6 +674,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -685,6 +693,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -719,6 +728,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -737,6 +747,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -766,8 +777,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Uebersicht/Uebersicht.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 72;
@@ -801,8 +812,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Uebersicht/Uebersicht.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 72;

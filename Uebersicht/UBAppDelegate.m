@@ -18,6 +18,7 @@
 #import "UBWidgetsStore.h"
 #import "UBWebSocket.h"
 #import "UBWindowsController.h"
+#import "Log.h"
 
 int const PORT = 41416;
 
@@ -32,6 +33,7 @@ int const PORT = 41416;
     UBWidgetsStore* widgetsStore;
     UBWidgetsController* widgetsController;
     BOOL needsRefresh;
+    Log* logger;
 }
 
 @synthesize statusBarMenu;
@@ -43,6 +45,8 @@ int const PORT = 41416;
     preferences = [[UBPreferencesController alloc]
         initWithWindowNibName:@"UBPreferencesController"
     ];
+    
+    logger = [Log alloc];
 
     // NSTask doesn't terminate when xcode stop is pressed. Other ways of
     // spawning the server, like system() or popen() have the same problem.
@@ -229,6 +233,20 @@ int const PORT = 41416;
             dataHandler(outStr);
         });
     };
+    [task setStandardError:[NSPipe pipe]];
+    [task.standardError fileHandleForReading].readabilityHandler = ^(NSFileHandle *handle) {
+        NSData *output = [handle availableData];
+        NSString *outStr = [[NSString alloc]
+            initWithData:output
+            encoding:NSUTF8StringEncoding
+        ];
+        
+        NSLog(@"%@", outStr);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            dataHandler(outStr);
+        });
+    };
+    
     
     task.terminationHandler = ^(NSTask *theTask) {
         [theTask.standardOutput fileHandleForReading].readabilityHandler = nil;
@@ -335,6 +353,7 @@ int const PORT = 41416;
 
 - (IBAction)refreshWidgets:(id)sender
 {
+    [logger logMessage: @"UBAppDelegate:refreshWidgets"];
     needsRefresh = YES;
     [screensController syncScreens:self];
 }

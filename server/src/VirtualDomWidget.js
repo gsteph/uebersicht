@@ -7,6 +7,12 @@ const html = require('react').createElement;
 const ErrorDetails = require('./ErrorDetails');
 window.html = html;
 
+window.getTS = function getTS() {
+  var tzoffset = (new Date()).getTimezoneOffset() * 60000 //offset in milliseconds
+  var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1)
+  return localISOTime.split("T")[1]
+}
+
 const defaults = {
   id: 'widget',
   refreshFrequency: 1000,
@@ -154,6 +160,7 @@ module.exports = function VirtualDomWidget(widgetObject) {
   };
 
   api.forceRefresh = function forceRefresh() {
+    $.post("http://127.0.0.1:41417/http://127.0.0.1:5000/log", window.getTS()+"000 coffee     : api.forceRefresh")
     commandLoop.forceTick();
   };
 

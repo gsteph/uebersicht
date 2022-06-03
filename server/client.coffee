@@ -9,6 +9,10 @@ actions = require './src/actions'
 userCssLink = null
 detectWidgetHover = require './src/detectWidgetHover'
 
+window.getTS = ->
+  tzoffset = (new Date()).getTimezoneOffset() * 60000 #offset in milliseconds
+  localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1)
+  return localISOTime.split("T")[1]
 
 window.onload = ->
   sharedSocket.open("ws://#{window.location.host}")
@@ -39,6 +43,7 @@ window.onload = ->
 
     listenToRemote (action) ->
       if action.type == 'WIDGET_WANTS_REFRESH'
+        $.post("http://127.0.0.1:41417/http://127.0.0.1:5000/log", window.getTS()+"000 coffee     : WIDGET_WANTS_REFRESH")
         render.rendered[action.payload]?.instance?.forceRefresh()
       else if action.type == 'WIDGET_ADDED'
         store.dispatch(action)
